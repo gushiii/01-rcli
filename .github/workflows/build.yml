@@ -20,6 +20,8 @@ jobs:
         platform: [ubuntu-latest]
     runs-on: ${{ matrix.platform }}
     steps:
+      - name: Configure Fast APT Mirror
+        uses: vegardit/fast-apt-mirror.sh@v1
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
