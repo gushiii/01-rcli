@@ -1,4 +1,5 @@
 use rand::seq::{IndexedRandom, SliceRandom};
+use zxcvbn::zxcvbn;
 
 pub fn process_genpass(
     length: u8,
@@ -42,7 +43,11 @@ pub fn process_genpass(
     );
 
     password.shuffle(&mut rng);
-    println!("{}", password.into_iter().collect::<String>());
+    let password = password.into_iter().collect::<String>();
+    println!("{}", password);
+
+    let estimate = zxcvbn(&password, &[]);
+    eprintln!("Password strength: {}", estimate.score());
 
     Ok(())
 }
