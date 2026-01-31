@@ -1,13 +1,22 @@
 use std::fs;
 
 use anyhow::Result;
-use csv::Reader;
 use serde_json::{Map, Value};
 
 use crate::opts::OutputFormat;
 
-pub fn process_csv(input: &str, output: String, format: OutputFormat) -> Result<()> {
-    let mut reader = Reader::from_path(input)?;
+pub fn process_csv(
+    input: &str,
+    header: bool,
+    delimiter: &char,
+    output: String,
+    format: OutputFormat,
+) -> Result<()> {
+    let mut reader = csv::ReaderBuilder::new()
+        .has_headers(header)
+        .delimiter(*delimiter as u8)
+        .from_path(input)?;
+
     let mut ret = Vec::with_capacity(128);
     let headers = reader.headers()?.clone();
     for result in reader.records() {

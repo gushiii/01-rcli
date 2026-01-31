@@ -10,7 +10,13 @@ fn main() -> anyhow::Result<()> {
             } else {
                 format!("output.{}", opts.format)
             };
-            process_csv(&opts.input, output, opts.format)?
+            process_csv(
+                &opts.input,
+                opts.header,
+                &opts.delimiter,
+                output,
+                opts.format,
+            )?
         }
         Subcommand::GenPass(opts) => {
             let _ = process_genpass(
