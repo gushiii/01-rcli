@@ -3,7 +3,7 @@ use std::fs;
 use anyhow::Result;
 use serde_json::{Map, Value};
 
-use crate::opts::OutputFormat;
+use crate::cli::OutputFormat;
 
 pub fn process_csv(
     input: &str,
